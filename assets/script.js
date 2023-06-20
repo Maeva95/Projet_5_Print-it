@@ -1,24 +1,24 @@
 const slides = [
 	{
-		"image":"slide1.jpg",
+		"image":"./assets/images/slideshow/slide1.jpg",
 		"tagLine":"Impressions tous formats <span>en boutique et en ligne</span>"
 	},
 	{
-		"image":"slide2.jpg",
+		"image":"./assets/images/slideshow/slide2.jpg",
 		"tagLine":"Tirages haute définition grand format <span>pour vos bureaux et events</span>"
 	},
 	{
-		"image":"slide3.jpg",
+		"image":"./assets/images/slideshow/slide3.jpg",
 		"tagLine":"Grand choix de couleurs <span>de CMJN aux pantones</span>"
 	},
 	{
-		"image":"slide4.png",
+		"image":"./assets/images/slideshow/slide4.png",
 		"tagLine":"Autocollants <span>avec découpe laser sur mesure</span>"
 	}
 ]
 
 
-console.log(slides[1]["image"])
+console.log(slides[0]["image"])
 
 // ajout des flèches de navigation du slider
 let arrowPrev = document.querySelector(".arrow_left");
@@ -83,9 +83,9 @@ function prevSlide() {
     for (let i = 0; i < slides.length; i++) {
         dot[i].className = dot[i].className.replace(" dot_selected", "");
     }
-
-    dot[i].className += " dot_selected";
     imageSlide.src = slides[i]["image"];
     imageSlide.alt = slides[i]["tagLine"];
     textSlide.innerHTML = slides[i]["tagLine"];
+	dot[i].className += " dot_selected";
+
 }
