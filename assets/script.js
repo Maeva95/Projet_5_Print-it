@@ -15,27 +15,18 @@ const slides = [
 		"image":"slide4.png",
 		"tagLine":"Autocollants <span>avec découpe laser sur mesure</span>"
 	}
+
 ]
 
-
-// Sélection des éléments du DOM
+// Sélection des éléments du DOM:
 const imageSlide = document.querySelector(".banner-img");
 const textSlide = banner.querySelector("p");
 const dotContainer = document.querySelector(".dots");
 
-
 // ajout des flèches de navigation du slider:
+
 const arrowPrev = document.querySelector(".arrow_left");
 const arrowNext = document.querySelector(".arrow_right");
-
-let position = 0;
-
-
-// Ajout des Event Listener sur les flèches:
-
-arrowPrev.addEventListener("click", prevSlide)
-arrowNext.addEventListener("click", nextSlide)
-
 
 // Création des bullet points du slider:
 
@@ -46,55 +37,45 @@ for (let i = 0; i < slides.length; i++) {
 }
 
 const dots = dotContainer.querySelectorAll(".dot");
-// ajout du dot_selected sur le 1er bullet point
 
+// position de la slide en cours de visionnage
+let positionCurrentSlide = 0;
 
-function refreshDots() {
-    dots.forEach(dot => {
-        dot.classList.remove("dot_selected");
-    })
-	dots[position].classList.add("dot_selected");
-
-}
-
-refreshDots()
-refreshSlide()
-
-
-// création fonction changement slides next et prev
-
-    /* changement de position de la slide à la prochaine position */
-function nextSlide() {
+// création de la fonction de la slide en cours de visionnage /les autres restent masquées
+function showCurrentSlide (){
     
-    position++;
-    if (position > slides.length-1) {
-        position=0;
-    }
-    refreshDots()
-    refreshSlide()
-}
-
-    /* changement de position de la slide à la position précédente */
-
-function prevSlide() {
-    
-    position--;
-    if (position<0){
-        position=slides.length-1;
-    }
-    refreshDots()
-    refreshSlide()
-
-}
-
-// Fonction va permettre de positionner tous les élements liés à la slide visionnée
-
-function refreshSlide (){
-    const slide = slides[position];
-    const image = slide.image;
-    const tagLine = slide.tagLine;
+    const currentSlide = positionCurrentSlide%slides.length;
+    const {image, tagLine} = slides[currentSlide];
     imageSlide.src = `./assets/images/slideshow/${image}`;
     imageSlide.alt = tagLine;
     textSlide.innerHTML = tagLine;
+    
+    // ajout du dot_selected sur la slide actuelle
+    function refreshDots() {
+        dots.forEach(dot => {
+            dot.classList.remove("dot_selected");
+        })
+        dots[currentSlide].classList.add("dot_selected");
+    }
+    refreshDots();
+};
 
+showCurrentSlide ();
+
+// création de la fonction changement slides suivante (next) et précédente (prev)
+
+function changeSlide(){
+    arrowPrev.addEventListener("click", () => {
+        showCurrentSlide();
+        positionCurrentSlide--;
+    });
+
+    arrowNext.addEventListener("click", () => {
+        showCurrentSlide ();
+        positionCurrentSlide++;
+    });
 }
+changeSlide()
+
+
+
